@@ -45,7 +45,6 @@ export class UsersController {
   }
 
   @Post('/register')
-  @UseGuards(AuthenticationGuard)
   @ApiOperation({ summary: 'Register new user' })
   async register(@Body() data: CreateUserDto) {
     // check parameters
