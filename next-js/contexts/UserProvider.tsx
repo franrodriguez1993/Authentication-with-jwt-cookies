@@ -1,7 +1,8 @@
 'use client';
 
-import { createContext, PropsWithChildren, useContext, useState } from "react"
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react"
 import { UserInterface } from "../interface/user.interface";
+import { getUserInfo } from "../services/user";
 
 // determinamos un type y un valor por default:
 type UserContextType = {
@@ -17,6 +18,24 @@ const UserContext = createContext<UserContextType>(DEFAULT_VALUE_CONTEXT);
 const UserProvider = ({ children }: PropsWithChildren) => {
   
   const [user, setUser] = useState<UserInterface | null>(null)
+
+  // get user info
+  useEffect(() => {
+    const checkSession = localStorage.getItem("user-session");
+    if (!checkSession) return;
+
+    const fetchUserInfo = async () => {
+      try {
+        const userData = await getUserInfo();
+        setUser(userData);
+      } catch (error) {
+        setUser(null); 
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
   
   return (
     <UserContext.Provider value={{user,setUser}}>

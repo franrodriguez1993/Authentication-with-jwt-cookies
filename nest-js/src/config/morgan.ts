@@ -1,5 +1,5 @@
 import * as morgan from 'morgan';
-import Logger from './winston'; 
+import Logger from './winston';
 
 const stream: morgan.StreamOptions = {
   write: (message) => Logger.http(message),

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { UtilService } from './util.service';
-
+import { UtilService } from './services/util.service';
+import JWTService from './services/jwt.service';
 
 @Module({
-  imports:[],
-  exports: [UtilService],
-  providers: [UtilService],
+  imports: [],
+  providers: [UtilService, JWTService],
+  exports: [UtilService, JWTService],
 })
 export class SharedModule {}

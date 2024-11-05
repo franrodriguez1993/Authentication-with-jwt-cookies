@@ -1,6 +1,9 @@
+'use client'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import { useUserContext } from '../contexts/UserProvider'
+import { logoutUsers } from '../services/user'
 
 const navigation = [
   { name: 'Home', href: '/', current: false },
@@ -13,7 +16,16 @@ function classNames(...classes: unknown[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function Navbar() {
+
+  const { user } = useUserContext();
+
+  const handleClick = async() => {
+    await logoutUsers();
+    localStorage.removeItem("user-session");
+
+  }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -64,7 +76,7 @@ export default function Example() {
             </button>
 
             {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
+              {user && <Menu as="div" className="relative ml-3">
               <div>
                 <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="absolute -inset-1.5" />
@@ -98,14 +110,15 @@ export default function Example() {
                 </MenuItem>
                 <MenuItem>
                   <a
-                    href="#"
+                    onClick={handleClick}
+                    href="/"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Sign out
                   </a>
                 </MenuItem>
               </MenuItems>
-            </Menu>
+            </Menu>}
           </div>
         </div>
       </div>

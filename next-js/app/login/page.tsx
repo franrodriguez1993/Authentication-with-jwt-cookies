@@ -22,7 +22,9 @@ const LoginPage = () => {
   const onSubmit = async (data: formLoginInputs) => {
     const res = await loginUsers(data)
     if (res.statusCode === 200) {
+
       setUser(res.result.user);
+      localStorage.setItem("user-session","active")
       router.push("/profile")
     }
     else {

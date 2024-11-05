@@ -4,6 +4,7 @@ export const registerUsers = async (data:formRegisterInputs) => {
   
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/register`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -26,6 +27,7 @@ export const loginUsers = async (data:formLoginInputs) => {
   
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -33,6 +35,33 @@ export const loginUsers = async (data:formLoginInputs) => {
         email: data.email,
         password: data.password,
       }),
+    });
+  
+  if (!response.ok) {
+    throw new Error("Error")
+  };
+  return await response.json()
+
+}
+
+export const logoutUsers = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+  
+  if (!response.ok) {
+    throw new Error("Error")
+  };
+  return await response.json()
+
+}
+
+
+export const getUserInfo = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
+      method: 'GET',
+      credentials: 'include',
     });
   
   if (!response.ok) {

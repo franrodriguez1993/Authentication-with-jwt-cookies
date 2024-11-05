@@ -6,13 +6,15 @@ import { Users, UsersSchema } from './users.schema';
 import { SharedModule } from '../shared/shared.module';
 
 @Module({
-  imports:[ MongooseModule.forFeature([
-    {
-      name: Users.name,
-      schema: UsersSchema,
-    },
-  ]),
-    SharedModule],
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: Users.name,
+        schema: UsersSchema,
+      },
+    ]),
+    SharedModule,
+  ],
   controllers: [UsersController],
   providers: [UsersService],
 })

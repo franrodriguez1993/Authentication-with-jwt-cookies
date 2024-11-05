@@ -4,17 +4,21 @@ import { ConfigModule } from '@nestjs/config';
 import { MongoConfigModule } from './database/mongo.module';
 import { SharedModule } from './modules/shared/shared.module';
 import morganConfig from './config/morgan';
+import { TokenHistoryModule } from './modules/token-history/token-history.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({isGlobal:true}),
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     UsersModule,
     MongoConfigModule,
-  SharedModule],
+    SharedModule,
+    TokenHistoryModule,
+  ],
   controllers: [],
   providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply( morganConfig).forRoutes('*');
+    consumer.apply(morganConfig).forRoutes('*');
   }
 }

@@ -20,6 +20,7 @@ const RegisterPage = () => {
   const router = useRouter();
 
   const onSubmit = async (data: formRegisterInputs) => {
+
     const res = await registerUsers(data)
     if (res.statusCode === 201) {
       setUser(res.result.user);
